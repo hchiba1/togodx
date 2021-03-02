@@ -11,7 +11,9 @@ PREFIX refexo: <http://purl.jp/bio/01/refexo#>
 
 # SELECT *
 # SELECT DISTINCT ?human_gene ?branch_time_mya ?tissue_label
-SELECT DISTINCT ?human_gene ?branch_time_mya ?tissue_label ?gtex_v6_tissue_label
+# SELECT DISTINCT ?human_gene ?branch_time_mya ?tissue_label ?gtex_v6_tissue_label
+# SELECT DISTINCT ?human_gene ?branch_time_mya (GROUP_CONCAT(DISTINCT ?tissue_label; separator=",") AS ?tissue_labels) ?gtex_v6_tissue_label
+SELECT DISTINCT ?human_gene ?branch_time_mya (GROUP_CONCAT(DISTINCT ?tissue_label; separator=",") AS ?tissue_labels) (GROUP_CONCAT(DISTINCT ?gtex_v6_tissue_label; separator=",") AS ?gtex_v6_tissue_labels)
 WHERE {
   {
     SELECT ?human_gene (max(?time) as ?branch_time_mya)
