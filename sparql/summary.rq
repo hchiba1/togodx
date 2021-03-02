@@ -10,7 +10,8 @@ PREFIX hop: <http://purl.org/net/orthordf/hOP/ontology#>
 PREFIX refexo: <http://purl.jp/bio/01/refexo#>
 
 # SELECT *
-SELECT DISTINCT ?human_gene ?branch_time_mya ?tissue_label
+# SELECT DISTINCT ?human_gene ?branch_time_mya ?tissue_label
+SELECT DISTINCT ?human_gene ?branch_time_mya ?tissue_label ?gtex_v6_tissue_label
 WHERE {
   {
     SELECT ?human_gene (max(?time) as ?branch_time_mya)
@@ -26,4 +27,12 @@ WHERE {
   ?human_gene refexo:affyProbeset/refexo:isPositivelySpecificTo ?tissue .
   ?tissue rdfs:label ?tissue_label .
   FILTER(lang(?tissue_label) = 'en')
+
+  OPTIONAL {
+    GRAPH <https://refex.dbcls.jp/rdf/tissue_specific_genes_gtex_v6> {
+      ?ensg refexo:isPositivelySpecificTo ?gtex_v6_tissue .
+    }
+    ?ensg refexo:ncbigene ?human_gene .
+  }
+  ?gtex_v6_tissue rdfs:label ?gtex_v6_tissue_label .
 }
