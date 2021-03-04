@@ -1,0 +1,13 @@
+#!/usr/bin/env spang2
+# @endpoint https://integbio.jp/rdf/ebi/sparql
+
+PREFIX ensembl: <http://rdf.ebi.ac.uk/resource/ensembl/>
+
+SELECT *
+WHERE {
+  VALUES (?ensg) { (ensembl:ENSG00000150773) }
+  ?ensg rdfs:label ?gene_label .
+  SERVICE <https://orth.dbcls.jp/sparql-dev> {
+    ?ensg ?p ?o .
+  }
+}
