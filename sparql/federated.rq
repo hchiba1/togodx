@@ -1,0 +1,14 @@
+#!/usr/bin/env spang2
+# @endpoint https://integbio.jp/rdf/ebi/sparql
+
+PREFIX ensembl: <http://rdf.ebi.ac.uk/resource/ensembl/>
+
+SELECT ?ensg ?ensg_id
+WHERE {
+  ?ensg rdfs:seeAlso ?ensg_id .
+  ?ensg_id a <http://identifiers.org/ensembl> .
+  SERVICE <https://orth.dbcls.jp/sparql-dev> {
+    ?ensg_id refexo:isPositivelySpecificTo ?tissue .
+  }
+  VALUES (?ensg) { (ensembl:ENSG00000150773) }
+}
