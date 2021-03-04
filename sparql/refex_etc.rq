@@ -1,0 +1,12 @@
+#!/usr/bin/env spang2
+# @endpoint orthodev
+
+SELECT *
+WHERE {
+  ?human_gene refexo:affyProbeset/refexo:isPositivelySpecificTo ?tissue .
+  ?human_gene refexo:ensembl ?ensg_id_org .
+  SERVICE <http://rdf.ebi.ac.uk/resource/ensembl/> {
+    ?ensg rdfs:seeAlso ?ensg_id_org .
+  }
+  VALUES (?human_gene) { (ncbigene:100) }
+}
