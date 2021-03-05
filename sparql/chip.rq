@@ -1,0 +1,26 @@
+#!/usr/bin/env spang2
+# @endpoint orthodev
+# @option -a
+
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX refexo: <http://purl.jp/bio/01/refexo#>
+
+SELECT ?downstream_count ?remaining_count
+WHERE {
+  {
+    SELECT (COUNT(DISTINCT ?ensg) AS ?downstream_count)
+    WHERE {
+      ?upstream obo:RO_0002428 ?ensg .
+    }
+  }
+  {
+    SELECT (COUNT(DISTINCT ?ensg) AS ?remaining_count)
+    WHERE {
+      ?ensg refexo:ncbigene ?ncbigene .
+      FILTER NOT EXISTS {
+      # MINUS {
+        ?upstream obo:RO_0002428 ?ensg .
+      }
+    }
+  }
+}
