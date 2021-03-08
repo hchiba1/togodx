@@ -1,0 +1,11 @@
+#!/usr/bin/env spang2
+# @endpoint m2r
+# see also http://data.med2rdf.org/civic/
+# http or https ?
+# civic.gene:2566 is missing -> ncbigene:25 ABL1
+
+SELECT *
+WHERE {
+  ?gene a m2r:Gene .
+  FILTER (regex(?gene, "civic"))
+}
