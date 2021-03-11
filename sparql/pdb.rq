@@ -1,0 +1,10 @@
+#!/usr/bin/env spang2
+# @endpoint nbdc
+
+PREFIX pdbo: <https://rdf.wwpdb.org/schema/pdbx-v50.owl#>
+
+SELECT *
+WHERE {
+  ?pdb pdbo:has_entityCategory ?cat .
+}
+LIMIT 10
