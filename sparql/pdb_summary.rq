@@ -1,0 +1,21 @@
+#!/usr/bin/env spang2
+# @endpoint togosite
+PREFIX pdbr: <https://rdf.wwpdb.org/pdb/>
+PREFIX pdbo: <https://rdf.wwpdb.org/schema/pdbx-v50.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT *
+WHERE {
+  VALUES ?PDBentry { pdbr:6TIW }
+     ?PDBentry    rdf:type	                   pdbo:datablock .
+     ?PDBentry    dc:title  	               ?title .
+     ?PDBentry    pdbo:has_entityCategory      ?entity .
+     ?entity      pdbo:has_entity              ?entity_each .
+     ?entity_each pdbo:referenced_by_struct_ref ?struct_ref .
+#    ?entity_each pdbo:entity.formula_weight    ?formula_weight .
+     ?struct_ref pdbo:link_to_uniprot ?id_uniprot .
+     ?entity_each pdbo:entity.pdbx_description ?description .
+}
