@@ -1,0 +1,115 @@
+#!/usr/bin/env spang2
+# @endpoint https://orth.dbcls.jp/sparql-dev
+# @input (ncbigene:100)
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX ncbigene: <http://identifiers.org/ncbigene/>
+PREFIX taxid: <http://identifiers.org/taxonomy/>
+PREFIX nuc: <http://ddbj.nig.ac.jp/ontologies/nucleotide/>
+PREFIX hop: <http://purl.org/net/orthordf/hOP/ontology#>
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX homologene: <https://ncbi.nlm.nih.gov/homologene/>
+
+SELECT ?id ?description ?type_of_gene ?chromosome ?map_location
+(GROUP_CONCAT(DISTINCT ?synonym; separator="|") AS ?synonyms)
+(GROUP_CONCAT(DISTINCT ?others; separator="|") AS ?other_descriptions)
+(GROUP_CONCAT(DISTINCT ?tissue_label; separator=",") AS ?tissue_labels)
+(GROUP_CONCAT(DISTINCT ?gtex_v6_tissue_label; separator=",") AS ?gtex_v6_tissue_labels)
+?homologene_branch_label
+# (GROUP_CONCAT(DISTINCT ?hop_branch_label; separator="|") AS ?hop_branch_labels)
+?paralog_count
+?human_paralog_ids
+WHERE {
+  VALUES (?human_gene) { {{INPUT}} }
+  ?human_gene dct:description ?description ;
+      dct:identifier ?id ;
+      hop:typeOfGene ?type_of_gene ;
+      nuc:chromosome ?chromosome ;
+      nuc:map ?map_location .
+  OPTIONAL {
+    ?human_gene nuc:standard_name ?hgnc_symbol .
+  }
+  OPTIONAL {
+    ?human_gene nuc:gene_synonym ?synonym .
+  }
+  OPTIONAL {
+    ?human_gene dct:alternative ?others .
+  }
+
+  OPTIONAL{
+    {
+      SELECT ?human_gene (max(?time) as ?branch_time_mya)
+      WHERE {
+        ?grp orth:inDataset homologene: ;
+            orth:hasHomologousMember ?human_gene, ?gene .
+        ?gene orth:taxon ?taxid .
+        ?taxid hop:branchTimeMya ?time .
+      }
+    }
+    ?branch a hop:HomoloGeneBranch ;
+        dct:identifier ?branch_id ;
+        rdfs:label ?homologene_branch_label ;
+        hop:timeMya ?branch_time_mya .
+  }
+
+  OPTIONAL {
+    {
+      SELECT ?human_gene (COUNT(DISTINCT ?human_paralog) AS ?paralog_count)
+      WHERE {
+        ?grp orth:inDataset homologene: ;
+            orth:hasHomologousMember ?human_gene, ?human_paralog .
+        ?human_paralog orth:taxon taxid:9606 .
+      }
+    }
+  }
+
+  OPTIONAL{
+    ?human_gene refexo:affyProbeset/refexo:isPositivelySpecificTo ?tissue .
+    ?tissue rdfs:label ?tissue_label .
+    FILTER(lang(?tissue_label) = 'en')
+  }
+
+  OPTIONAL {
+    GRAPH <https://refex.dbcls.jp/rdf/tissue_specific_genes_gtex_v6> {
+      ?ensg refexo:isPositivelySpecificTo ?gtex_v6_tissue .
+    }
+    ?ensg refexo:ncbigene ?human_gene .
+    ?gtex_v6_tissue rdfs:label ?gtex_v6_tissue_label .
+  }
+
+  OPTIONAL {
+    {
+      SELECT ?human_gene (GROUP_CONCAT(DISTINCT ?human_paralog_id; separator="|") AS ?human_paralog_ids)
+      WHERE {
+        ?grp orth:inDataset homologene: ;
+            orth:hasHomologousMember ?human_gene, ?human_paralog .
+        ?human_paralog orth:taxon taxid:9606 ;
+            dct:identifier ?human_paralog_id
+        FILTER (?human_gene != ?human_paralog)
+      }
+    }
+  }
+
+  # OPTIONAL {
+  #   {
+  #     SELECT ?human_gene ?hop_branch ?hop_branch_label
+  #     WHERE {
+  #       {
+  #         SELECT ?grp ?human_gene (max(?org_id) as ?max_id)
+  #         WHERE {
+  #           ?grp orth:inDataset <http://purl.org/net/orthordf/hOP/> ;
+  #           orth:hasHomologousMember ?human_gene ;
+  #           orth:organism ?org .
+  #           ?org dct:identifier ?org_id .
+  #         }
+  #       }  
+  #       BIND(URI(CONCAT("http://purl.org/net/orthordf/hOP/organism/", ?max_id)) AS ?max_org)
+  #       ?max_org hop:branch ?hop_branch .
+  #       ?hop_branch a hop:Branch ;
+  #       rdfs:label ?hop_branch_label .
+  #     }
+  #   }
+  # }
+
+}
