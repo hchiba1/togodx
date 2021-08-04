@@ -1,0 +1,19 @@
+#!/usr/bin/env spang2
+# @endpoint https://integbio.jp/rdf/sparql
+# @option -vac
+
+PREFIX tgo:     <http://purl.jp/bio/101/opentggates/ontology/>
+PREFIX pubchem: <http://identifiers.org/pubchem.compound/>
+
+SELECT *
+WHERE {
+  ?compound rdfs:seeAlso pubchem:178 ;
+      rdfs:label ?compound_label .
+  ?unitset tgo:hasTestSample/tgo:experimentalCondition/tgo:exposedCompound ?compound .
+  ?unitset tgo:hasUnitSetProfile ?unitsetprofile .
+  ?unitsetprofile sio:000216 [
+    a tgo:PValue ;
+    sio:SIO_000300 ?pvalue ;
+    tgo:probe ?probe
+  ] .
+}
