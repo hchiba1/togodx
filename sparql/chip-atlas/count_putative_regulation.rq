@@ -1,6 +1,8 @@
 #!/usr/bin/env spang2
-# @endpoint orthtest
+# @endpoint https://orth.dbcls.jp/sparql-test
 # @option --time
+
+PREFIX cao: <http://chip-atlas.org/ontology/>
 
 SELECT (COUNT(?s) AS ?count)
 WHERE {
