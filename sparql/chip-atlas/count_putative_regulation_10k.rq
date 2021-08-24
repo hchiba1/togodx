@@ -6,5 +6,6 @@ PREFIX cao: <http://chip-atlas.org/ontology/>
 
 SELECT (COUNT(?s) AS ?count)
 WHERE {
-  ?s a cao:PutativeRegulation .
+  ?s a cao:PutativeRegulation ;
+     cao:score10k ?score .
 }
