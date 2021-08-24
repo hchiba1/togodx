@@ -1,0 +1,9 @@
+#!/usr/bin/env spang2
+# @endpoint orthtest
+# @option --time
+
+SELECT (COUNT(?s) AS ?count)
+WHERE {
+  ?s a cao:PutativeRegulation ;
+     cao:score1k ?score .
+}
