@@ -4,7 +4,7 @@
 
 PREFIX cao: <http://chip-atlas.org/ontology/>
 
-SELECT ?tf (COUNT(?target) AS ?count_target)
+SELECT ?tf (COUNT(DISTINCT ?target) AS ?count_target)
 WHERE {
   ?s a cao:PutativeRegulation ;
      cao:hasTarget ?target ;
