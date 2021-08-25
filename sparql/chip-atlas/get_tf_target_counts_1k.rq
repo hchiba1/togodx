@@ -1,14 +1,14 @@
 #!/usr/bin/env spang2
 # @endpoint https://orth.dbcls.jp/sparql-test
-# @option --time -va
+# @option --time -vac
 
 PREFIX cao: <http://chip-atlas.org/ontology/>
 
-SELECT ?tf (COUNT(DISTINCT ?target) AS ?count_target)
+SELECT ?tf (COUNT(DISTINCT ?target) AS ?target_counts)
 WHERE {
   ?s a cao:PutativeRegulation ;
      cao:hasTarget ?target ;
      cao:score1k ?score ;
      cao:hasTF ?tf .
 }
-ORDER BY DESC(?count_target) ?tf
+ORDER BY DESC(?target_counts) ?tf
