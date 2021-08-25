@@ -1,6 +1,6 @@
 #!/usr/bin/env spang2
 # @endpoint https://orth.dbcls.jp/sparql-test
-# @option --time
+# @option --time -a
 
 PREFIX cao: <http://chip-atlas.org/ontology/>
 
