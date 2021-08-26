@@ -1,0 +1,16 @@
+#!/usr/bin/env spang2
+# @endpoint https://orth.dbcls.jp/sparql-test
+# @option --time -acs
+# @param tf1=ENSG00000005889
+# @param tf2=ENSG00000124092
+
+PREFIX cao: <http://chip-atlas.org/ontology/>
+PREFIX ens: <http://rdf.ebi.ac.uk/resource/ensembl/>
+
+SELECT ?s ?p ?o
+WHERE {
+  ?s a cao:Colocalization ;
+     cao:hasTF ensg:{{tf1}} ;
+     cao:hasPartnerTF ensg:{{tf2}} ;
+     ?p ?o .
+}

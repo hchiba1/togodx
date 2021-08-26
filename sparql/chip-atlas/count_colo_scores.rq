@@ -1,0 +1,14 @@
+#!/usr/bin/env spang2
+# @endpoint https://orth.dbcls.jp/sparql-test
+# @option --time
+
+PREFIX cao: <http://chip-atlas.org/ontology/>
+
+SELECT ?score (COUNT(?s) AS ?count)
+WHERE {
+  ?s a cao:Colocalization ;
+     cao:hasTF ?tf ;
+     cao:hasPartnerTF ?tf2 ;
+     cao:coloScore ?score .
+}
+ORDER BY DESC(?score)
