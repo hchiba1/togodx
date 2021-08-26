@@ -1,4 +1,4 @@
-tf	target_counts
+tf	target_gene_counts
 ensg:ENSG00000141867	16340
 ensg:ENSG00000100393	16175
 ensg:ENSG00000159216	16117

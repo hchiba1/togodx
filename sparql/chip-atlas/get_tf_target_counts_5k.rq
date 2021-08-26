@@ -4,11 +4,11 @@
 
 PREFIX cao: <http://chip-atlas.org/ontology/>
 
-SELECT ?tf (COUNT(DISTINCT ?target) AS ?target_counts)
+SELECT ?tf (COUNT(DISTINCT ?target_gene) AS ?target_gene_counts)
 WHERE {
   ?s a cao:PutativeRegulation ;
-     cao:hasTarget ?target ;
+     cao:hasTF ?tf ;
      cao:score5k ?score ;
-     cao:hasTF ?tf .
+     cao:hasTargetGene ?target_gene .
 }
-ORDER BY DESC(?target_counts) ?tf
+ORDER BY DESC(?target_gene_counts) ?tf
