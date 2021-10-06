@@ -1,0 +1,26 @@
+#!/usr/bin/env spang2
+# @endpoint https://integbio.jp/togosite/sparql
+# @param id=C04
+# @option --time -a
+
+PREFIX mesh: <http://id.nlm.nih.gov/mesh/>
+PREFIX meshv: <http://id.nlm.nih.gov/mesh/vocab#>
+PREFIX chembl: <http://rdf.ebi.ac.uk/terms/chembl#>
+
+SELECT (COUNT(DISTINCT ?molecule) AS ?count) ?tree
+WHERE {
+  ?tree ^meshv:treeNumber/rdfs:label ?label .
+  FILTER (regex(?tree, "mesh/C"))
+  FILTER NOT EXISTS {
+    ?tree meshv:parentTreeNumber ?parent .
+  }
+
+  # VALUES ?parent { mesh:C03 }
+  # VALUES ?parent { mesh:C10 }
+  # ?tree meshv:parentTreeNumber ?parent .
+
+  ?mesh meshv:treeNumber/meshv:parentTreeNumber* ?tree .
+  BIND(URI(replace(str(?mesh), 'id.nlm.nih.gov', 'identifiers.org')) AS ?mesh_id)
+  ?molecule chembl:hasDrugIndication/chembl:hasMesh ?mesh_id .
+}
+ORDER BY DESC(?count)

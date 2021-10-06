@@ -1,0 +1,23 @@
+#!/usr/bin/env spang2
+# @endpoint togosite
+# @option --time
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX mesh: <http://id.nlm.nih.gov/mesh/>
+PREFIX meshv: <http://id.nlm.nih.gov/mesh/vocab#>
+
+SELECT DISTINCT ?mesh_id ?mesh_label ?parent_mesh_id
+FROM <http://rdf.integbio.jp/dataset/togosite/mesh>
+WHERE {
+  # Diseases[C]以下に限定
+  FILTER (regex(str(?node), "C"))
+  ?node meshv:parentTreeNumber* ?tree .
+  OPTIONAL {
+    ?node meshv:parentTreeNumber ?parent  .
+    ?parent_mesh_id meshv:treeNumber ?parent .
+  }
+
+  ?mesh_id meshv:treeNumber ?node ;
+      rdfs:label ?mesh_label .
+  FILTER(lang(?mesh_label) = "en")
+}

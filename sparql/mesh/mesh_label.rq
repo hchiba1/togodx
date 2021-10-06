@@ -1,0 +1,11 @@
+#!/usr/bin/env spang2
+# @endpoint togosite
+# @option --time
+
+SELECT ?mesh ?mesh_tree_node ?label
+WHERE {
+  ?mesh_tree_node a meshv:TreeNumber .
+  # ?mesh_tree_node ^meshv:treeNumber/rdfs:label ?label .
+  ?mesh meshv:treeNumber ?mesh_tree_node .
+  ?mesh rdfs:label ?label .
+}
