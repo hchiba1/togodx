@@ -1,7 +1,9 @@
 #!/usr/bin/env spang2
 # @endpoint togosite
+# @option -a --time
 
 SELECT *
 WHERE {
-  <https://pubcasefinder.dbcls.jp/phenotype_context/disease:OMIM:103580/phenotype:HP:0001156> ?p ?o .
+  ?s a oa:Annotation ;
+     obo:ECO_9000001 ?eco .
 }
