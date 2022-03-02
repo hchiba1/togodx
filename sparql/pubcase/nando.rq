@@ -1,0 +1,8 @@
+#!/usr/bin/env spang2
+# @endpoint togosite
+
+SELECT *
+WHERE {
+  <http://nanbyodata.jp/ontology/NANDO_103580> ?p ?o .
+}
+

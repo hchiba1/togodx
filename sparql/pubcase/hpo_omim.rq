@@ -1,0 +1,8 @@
+#!/usr/bin/env spang2
+# @endpoint togosite
+
+SELECT *
+FROM <http://rdf.integbio.jp/dataset/togosite/pubcasefinder>
+WHERE {
+  ?s ?p obo:HP_0001156 .
+}
