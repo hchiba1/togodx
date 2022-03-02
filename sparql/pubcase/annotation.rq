@@ -1,6 +1,6 @@
 #!/usr/bin/env spang2
 # @endpoint togosite
-# @option -a --time
+# @option --time
 
 SELECT *
 WHERE {
