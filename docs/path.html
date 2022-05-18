@@ -150,7 +150,7 @@
      area.appendChild(innerContainer);
 
      document.querySelector('#main-area').appendChild(area);
-     let sandboxUrl = urlToShare({sample: graphName});
+     let sandboxUrl = `https://sandbox.blitzboard.io/?sample=${encodeURIComponent(graphName)}`;
      link.href = sandboxUrl;
      link.innerText = 'Edit';
      let blitzboard = new Blitzboard(innerContainer);
