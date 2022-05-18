@@ -138,23 +138,23 @@
 <div class='container-fluid'>
     <div class='row' id='main-area'></div>
     <script>
+     let graphName = 'togodx-path';
      let area = document.createElement('div');
      let link = document.createElement('a');
      let innerContainer = document.createElement('div');
-     let sampleName = 'togodx-path';
      area.style = 'width: 800px; height: 700px; flex-basis: 800px;';
      area.className = "case col";
-     area.id = sampleName;
+     area.id = graphName;
      innerContainer.style = 'width: 800px; height: 600px; border: solid 1px silver;';
      area.appendChild(link);
      area.appendChild(innerContainer);
 
      document.querySelector('#main-area').appendChild(area);
-     let sandboxUrl = urlToShare({sample: sampleName});
+     let sandboxUrl = urlToShare({sample: graphName});
      link.href = sandboxUrl;
      link.innerText = 'Edit';
      let blitzboard = new Blitzboard(innerContainer);
-     loadSample(sampleName, (graph, config) => {
+     loadSample(graphName, (graph, config) => {
          blitzboard.setGraph(graph, false);
          blitzboard.setConfig(Function('blitzboard', '"use strict";return (' + config + ')')(blitzboard), true);
      });
