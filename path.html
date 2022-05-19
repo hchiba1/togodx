@@ -13,13 +13,11 @@
             <script>
              let graphName = 'togodx-path';
              let area = document.createElement('div');
-             let link = document.createElement('a');
              let innerContainer = document.createElement('div');
              area.style = 'width: 800px; height: 700px; flex-basis: 800px;';
              area.className = "case col";
              area.id = graphName;
              innerContainer.style = 'width: 800px; height: 600px; border: solid 1px silver;';
-             area.appendChild(link);
              area.appendChild(innerContainer);
              document.querySelector('#main-area').appendChild(area);
              let blitzboard = new Blitzboard(innerContainer);
