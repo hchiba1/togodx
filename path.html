@@ -8,7 +8,6 @@
         <meta content='#ffffff' name='theme-color'>
         <script src='https://cdn.jsdelivr.net/gh/blitzboard/blitzboard@master/lib/pg_parser_browserified.js' type='text/javascript'></script>
         <script src='https://cdn.jsdelivr.net/gh/blitzboard/blitzboard@master/vis-network.min.js'></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
         <script src='https://cdn.jsdelivr.net/gh/blitzboard/blitzboard@master/blitzboard.js'></script>
         <style>
          td {
@@ -144,10 +143,14 @@
              link.href = `https://hchiba1.github.io/blitzboard/?sample=${encodeURIComponent(graphName)}`;
              link.innerText = 'Edit';
              let blitzboard = new Blitzboard(innerContainer);
-             $.get(`https://raw.githubusercontent.com/hchiba1/togodx/main/path/graph.pg`, (graph) => {
+             fetch('https://raw.githubusercontent.com/hchiba1/togodx/main/path/graph.pg').then(res => {
+                 return res.text();
+             }).then(graph => {
                  blitzboard.setGraph(graph, false);
              });
-             $.get(`https://raw.githubusercontent.com/hchiba1/togodx/main/path/config.js`, (config) => {
+             fetch('https://raw.githubusercontent.com/hchiba1/togodx/main/path/config.js').then(res => {
+                 return res.text();
+             }).then(config => {
                  blitzboard.setConfig(Function('blitzboard', '"use strict";return (' + config + ')')(blitzboard), true);
              });
             </script>
