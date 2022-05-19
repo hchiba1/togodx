@@ -8,30 +8,25 @@
         <script src='https://cdn.jsdelivr.net/gh/blitzboard/blitzboard@master/blitzboard.js'></script>
     </head>
     <body>
-        <div class='container-fluid'>
-            <div class='row' id='main-area'></div>
-            <script>
-             let graphName = 'togodx-path';
-             let area = document.createElement('div');
-             let innerContainer = document.createElement('div');
-             area.style = 'width: 800px; height: 700px; flex-basis: 800px;';
-             area.className = "case col";
-             area.id = graphName;
-             innerContainer.style = 'width: 800px; height: 600px; border: solid 1px silver;';
-             area.appendChild(innerContainer);
-             document.querySelector('#main-area').appendChild(area);
-             let blitzboard = new Blitzboard(innerContainer);
-             fetch('https://raw.githubusercontent.com/hchiba1/togodx/main/path/graph.pg').then(res => {
-                 return res.text();
-             }).then(graph => {
-                 blitzboard.setGraph(graph, false);
-             });
-             fetch('https://raw.githubusercontent.com/hchiba1/togodx/main/path/config.js').then(res => {
-                 return res.text();
-             }).then(config => {
-                 blitzboard.setConfig(Function('blitzboard', `"use strict";return (${config})`)(blitzboard), true);
-             });
-            </script>
-        </div>
+        <div id='graph'></div>
+        <script>
+         let area = document.createElement('div');
+         let innerContainer = document.createElement('div');
+         area.style = 'width: 800px; height: 700px; flex-basis: 800px;';
+         innerContainer.style = 'width: 800px; height: 600px; border: solid 1px silver;';
+         area.appendChild(innerContainer);
+         document.querySelector('#graph').appendChild(area);
+         let blitzboard = new Blitzboard(innerContainer);
+         fetch('https://raw.githubusercontent.com/hchiba1/togodx/main/path/graph.pg').then(res => {
+             return res.text();
+         }).then(graph => {
+             blitzboard.setGraph(graph, false);
+         });
+         fetch('https://raw.githubusercontent.com/hchiba1/togodx/main/path/config.js').then(res => {
+             return res.text();
+         }).then(config => {
+             blitzboard.setConfig(Function('blitzboard', `"use strict";return (${config})`)(blitzboard), true);
+         });
+        </script>
     </body>
 </html>
