@@ -142,19 +142,19 @@
              area.appendChild(innerContainer);
 
              document.querySelector('#main-area').appendChild(area);
-             let sandboxUrl = `https://sandbox.blitzboard.io/?sample=${encodeURIComponent(graphName)}`;
+             let sandboxUrl = `https://hchiba1.github.io/blitzboard/?sample=${encodeURIComponent(graphName)}`;
              link.href = sandboxUrl;
              link.innerText = 'Edit';
              let blitzboard = new Blitzboard(innerContainer);
              let graph, config;
              let graphPromise = new Promise((resolve, reject) => {
-                 $.get(`https://raw.githubusercontent.com/hchiba1/blitzboard-samples/main/${graphName}/graph.pg`, (res) => {
+                 $.get(`https://raw.githubusercontent.com/hchiba1/togodx/main/path/graph.pg`, (res) => {
                      graph = res;
                      resolve();
                  });
              });
              let configPromise = new Promise((resolve, reject) => {
-                 $.get(`https://raw.githubusercontent.com/hchiba1/blitzboard-samples/main/${graphName}/config.js`, (res) => {
+                 $.get(`https://raw.githubusercontent.com/hchiba1/togodx/main/path/config.js`, (res) => {
                      config = res;
                      resolve();
                  });
