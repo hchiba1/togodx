@@ -11,12 +11,9 @@
         <div id='graph'></div>
         <script>
          let area = document.createElement('div');
-         let innerContainer = document.createElement('div');
-         area.style = 'width: 800px; height: 700px; flex-basis: 800px;';
-         innerContainer.style = 'width: 800px; height: 600px; border: solid 1px silver;';
-         area.appendChild(innerContainer);
+         area.style = 'width: 800px; height: 600px; border: solid 1px silver;';
          document.querySelector('#graph').appendChild(area);
-         let blitzboard = new Blitzboard(innerContainer);
+         let blitzboard = new Blitzboard(area);
          fetch('https://raw.githubusercontent.com/hchiba1/togodx/main/path/graph.pg').then(res => {
              return res.text();
          }).then(graph => {
