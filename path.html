@@ -8,21 +8,21 @@
         <script src='https://cdn.jsdelivr.net/gh/blitzboard/blitzboard@master/blitzboard.js'></script>
     </head>
     <body>
-        <div id='graph'></div>
+        <div id='main-area'></div>
         <script>
-         let area = document.createElement('div');
-         area.style = 'width: 800px; height: 600px; border: solid 1px silver;';
-         document.querySelector('#graph').appendChild(area);
-         let blitzboard = new Blitzboard(area);
+         const child = document.createElement('div');
+         child.style = 'width: 800px; height: 600px; border: solid 1px silver;';
+         document.querySelector('#main-area').appendChild(child);
+         let blitzboard = new Blitzboard(child);
          fetch('https://raw.githubusercontent.com/hchiba1/togodx/main/path/graph.pg').then(res => {
              return res.text();
          }).then(graph => {
              blitzboard.setGraph(graph, false);
-         });
-         fetch('https://raw.githubusercontent.com/hchiba1/togodx/main/path/config.js').then(res => {
-             return res.text();
-         }).then(config => {
-             blitzboard.setConfig(Function('blitzboard', `"use strict";return (${config})`)(blitzboard), true);
+             fetch('https://raw.githubusercontent.com/hchiba1/togodx/main/path/config.js').then(res => {
+                 return res.text();
+             }).then(config => {
+                 blitzboard.setConfig(Function('blitzboard', `"use strict";return (${config})`)(blitzboard), true);
+             });
          });
         </script>
     </body>
