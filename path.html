@@ -31,7 +31,7 @@
              fetch('https://raw.githubusercontent.com/hchiba1/togodx/main/path/config.js').then(res => {
                  return res.text();
              }).then(config => {
-                 blitzboard.setConfig(Function('blitzboard', '"use strict";return (' + config + ')')(blitzboard), true);
+                 blitzboard.setConfig(Function('blitzboard', `"use strict";return (${config})`)(blitzboard), true);
              });
             </script>
         </div>
