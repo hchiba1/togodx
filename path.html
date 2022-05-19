@@ -140,26 +140,14 @@
              innerContainer.style = 'width: 800px; height: 600px; border: solid 1px silver;';
              area.appendChild(link);
              area.appendChild(innerContainer);
-
              document.querySelector('#main-area').appendChild(area);
              link.href = `https://hchiba1.github.io/blitzboard/?sample=${encodeURIComponent(graphName)}`;
              link.innerText = 'Edit';
              let blitzboard = new Blitzboard(innerContainer);
-             let graph, config;
-             let graphPromise = new Promise((resolve, reject) => {
-                 $.get(`https://raw.githubusercontent.com/hchiba1/togodx/main/path/graph.pg`, (res) => {
-                     graph = res;
-                     resolve();
-                 });
-             });
-             let configPromise = new Promise((resolve, reject) => {
-                 $.get(`https://raw.githubusercontent.com/hchiba1/togodx/main/path/config.js`, (res) => {
-                     config = res;
-                     resolve();
-                 });
-             });
-             Promise.all([graphPromise, configPromise]).then(() => {
+             $.get(`https://raw.githubusercontent.com/hchiba1/togodx/main/path/graph.pg`, (graph) => {
                  blitzboard.setGraph(graph, false);
+             });
+             $.get(`https://raw.githubusercontent.com/hchiba1/togodx/main/path/config.js`, (config) => {
                  blitzboard.setConfig(Function('blitzboard', '"use strict";return (' + config + ')')(blitzboard), true);
              });
             </script>
