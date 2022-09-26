@@ -15,15 +15,15 @@
          document.querySelector('#main-area').appendChild(child);
          let blitzboard = new Blitzboard(child);
          let graph, config;
-         const graphPromise = fetch('https://raw.githubusercontent.com/hchiba1/togodx/main/path/graph.pg').then(res => {
+         const graphPromise = fetch('./path/graph.pg').then(res => {
              return res.text();
-         }).then(res => {
-             graph = res;
+         }).then(text => {
+             graph = text;
          });
-         const configPromise = fetch('https://raw.githubusercontent.com/hchiba1/togodx/main/path/config.js').then(res => {
+         const configPromise = fetch('./path/config.js').then(res => {
              return res.text();
-         }).then(res => {
-             config = res;
+         }).then(text => {
+             config = text;
          });
          Promise.all([graphPromise, configPromise]).then(() => {
              blitzboard.setGraph(graph, false);
