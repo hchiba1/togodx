@@ -1,7 +1,8 @@
 `spang2` can obtain results from *Virtuoso* by **automatic pagenation**.
 
-Example SPARQL query:
+Example SPARQL query: `orphanet.rq`
 ```
+#!/usr/bin/env spang2
 # @endpoint https://www.orpha.net/sparql
 
 PREFIX oboInOwl: <http://www.geneontology.org/formats/oboInOwl#>
@@ -12,9 +13,8 @@ WHERE {
 }
 ```
 
-Obtain data from SPARQL endpoint.
 ```
-$ spang2 orphanet.rq > orphanet.tsv
+$ ./orphanet.rq > orphanet.tsv
 Querying for the next page (OFFSET 10000 LIMIT 10000)...
 Querying for the next page (OFFSET 20000 LIMIT 10000)...
 Querying for the next page (OFFSET 30000 LIMIT 10000)...
@@ -23,13 +23,7 @@ $ wc orphanet.tsv
   42571   85142 3791019 orphanet.tsv
 ```
 
-You can also execute the query file as follows, if the
-file includes shebang line.
-```
-$ orphanet.rq > orphanet.tsv
-```
-
-Even without the query file, you can execute spang comand-line shortcuts equivalent to the query file.
+You can also execute `spang2` without the query file, using comand-line shortcuts.
 ```
 $ spang2 -e orphanet -P oboInOwl:hasDbXref > orphanet.tsv
 ```
