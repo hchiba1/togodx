@@ -1,6 +1,37 @@
 ## Case 3: 特定の疾患に関連する遺伝子を絞り込んだうえで、それらのタンパク質と相互作用する可能性のある化合物を取得する
 
 ### 目的
+網膜色素変症に関わるヒト遺伝子について、ゼブラフィッシュでも保存されているものに絞ったうえで、それらのタンパク質と相互作用する可能性のある化合物を取得する。
+
+### 背景
+網膜色素変症は指定難病の一つで治療方法も確立していないが、研究アプローチとしてモデル生物を用いた薬剤候補スクリーニング実験が考えられる([参考文献](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8425951/))。ここでは、網膜色素変性症およびそれに関連する表現型に着目して、TogoDXを用いた検索を行ってみる。
+
+### 検索方法の組み合わせ
+
+#### Add filters
+* `Protein` / `Disease-related proteins`
+  * Retinitis pigmentosa（網膜色素変性症）
+  * Congenital stationary night blindness（先天停止性夜盲）
+  * Cone-rod dystrophy（錐体桿体ジストロフィー）
+  * Leber congenital amaurosis（レーバー先天黒内障）
+* `Gene` / `Ortholog existence`
+  * Zebrafish (Danio rerio)
+
+#### Map attributes
+* `Compound` / `Max drug development phase`
+
+[検索の再現](https://togodx.dbcls.jp/human/?dataset=ncbigene&annotations=%5B%7B%22attributeId%22%3A%22compound_drug_development_phase_chembl%22%7D%5D&filters=%5B%7B%22attributeId%22%3A%22gene_ortholog_existence_homologene%22%2C%22nodes%22%3A%5B%7B%22node%22%3A%22organism_10%22%7D%5D%7D%2C%7B%22attributeId%22%3A%22protein_disease_related_proteins_uniprot%22%2C%22nodes%22%3A%5B%7B%22node%22%3A%22682%22%7D%2C%7B%22node%22%3A%221014%22%7D%2C%7B%22node%22%3A%22901%22%7D%2C%7B%22node%22%3A%22182%22%7D%5D%7D%5D)
+
+### 結果
+* 指定した疾患に関連するヒト遺伝子で、ゼブラフィッシュにもオーソログが存在する132の遺伝子が得られる。
+* さらに、それらのタンパク質と相互作用する可能性のある化合物が得られる。このうち、第IV相試験(製造販売後臨床試験)に達している化合物は193件である。
+* 関連する遺伝子が多くまた表現型も多様なため、得られた化合物が疾患に対して有効かはどうかを判定することは難しいが、少なくともCHEMBL91 (Miconazole) については、上記参考文献の実験でも網膜色素変性症に対し神経保護剤として有効であるという結果が出ている。
+![](https://i.imgur.com/HWpMYRG.png)
+
+
+## Case 3: 特定の疾患に関連する遺伝子を絞り込んだうえで、それらのタンパク質と相互作用する可能性のある化合物を取得する
+
+### 目的
 網膜色素変症に関わる遺伝子について、ゼブラフィッシュにおいてオーソログがあるものに絞ったうえで、それらのタンパク質と相互作用する可能性のある化合物を取得する。
 
 ### 背景
